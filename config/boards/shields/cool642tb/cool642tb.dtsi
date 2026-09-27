@@ -92,8 +92,13 @@
 
     left_encoder: encoder_left {
         compatible = "alps,ec11";
-        a-gpios = <&xiao_d 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        b-gpios = <&xiao_d 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        // a と b を入れ替えて、回転の向きを反転させている。
+        // 元は a=5 / b=0 で「時計回り＝戻る・減る」だった（上へスクロール／
+        // 音量ダウン／PgUp）。一般的な感覚と逆なので、ここで全レイヤーまとめて
+        // 反転させ、「時計回り＝進む・増える」に揃えた。
+        // レイヤーごとの sensor-bindings は触っていない。
+        a-gpios = <&xiao_d 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        b-gpios = <&xiao_d 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         steps = <12>;
         status = "disabled";
     };
